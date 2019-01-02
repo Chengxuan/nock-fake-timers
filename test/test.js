@@ -1,14 +1,14 @@
 const axios = require('axios');
 const { expect } = require('chai');
 const nock = require('nock');
-const sinon = require('sinon');
+const lolex = require('lolex');
 
 describe('Test', () => {
   const url = 'http://www.google.com';
   let clock;
 
-  before(() => clock = sinon.useFakeTimers());
-  after(() => clock.restore());
+  before(() => clock = lolex.install());
+  after(() => clock.uninstall());
 
   beforeEach(() => nock(url).get('/').reply(201));
   afterEach(() => expect(nock.isDone()).to.equal(true));
